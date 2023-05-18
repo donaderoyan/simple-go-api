@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  ### ===================
+  ### APP SERVICE
+  ### ===================
+  app:
+    container_name: app
+    restart: always
+    build: .
+    env_file:
+      - .env
+    ports:
+      - 4000:4000
+    networks:
+      - restapi_network
+    depends_on:
+      - db
+  ### ===================
+  ### DB SERVICE
+  ### ===================
+  db:
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "secret"
+      POSTGRES_DB: "toko_simple"
+    ports:
+      - 5432:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      - restapi_network
+  ### ========================
+  ### VOLUMES PERSISTENT DATA
+  ### ========================
+volumes:
+  pg-data:
+  ### ===================================
+  ### NETWORKS GROUP FOR ONE SAME SERVICE
+  ### ===================================
+networks:
+  restapi_network:

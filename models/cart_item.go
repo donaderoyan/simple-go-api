@@ -1,0 +1,35 @@
+package model
+
+import (
+	"time"
+
+	"github.com/google/uuid"
+	"github.com/shopspring/decimal"
+	"gorm.io/gorm"
+)
+
+type CartItem struct {
+	ID              string `gorm:"primaryKey;not null;unique"`
+	Cart            Cart
+	CartID          string `gorm:"index;not null"`
+	Product         Product
+	ProductID       string `gorm:"index;not null"`
+	Qty             int
+	BasePrice       decimal.Decimal `gorm:"type:decimal(16,2)"`
+	BaseTotal       decimal.Decimal `gorm:"type:decimal(16,2)"`
+	TaxAmount       decimal.Decimal `gorm:"type:decimal(16,2)"`
+	TaxPercent      decimal.Decimal `gorm:"type:decimal(10,2)"`
+	DiscountAmount  decimal.Decimal `gorm:"type:decimal(16,2)"`
+	DiscountPercent decimal.Decimal `gorm:"type:decimal(10,2)"`
+	SubTotal        decimal.Decimal `gorm:"type:decimal(16,2)"`
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
+}
+
+func (c *CartItem) BeforeCreate(tx *gorm.DB) error {
+	if c.ID == "" {
+		c.ID = uuid.New().String()
+	}
+
+	return nil
+}
