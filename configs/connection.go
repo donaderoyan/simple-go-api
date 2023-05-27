@@ -6,8 +6,8 @@ import (
 	model "github.com/donaderoyan/simple-go-api/models"
 	util "github.com/donaderoyan/simple-go-api/utils"
 	"github.com/sirupsen/logrus"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"gorm.io/postgres"
 )
 
 func Connection() *gorm.DB {

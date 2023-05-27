@@ -7,7 +7,7 @@ import (
 )
 
 func SendGridMail(name, email, subject, fileName, token string) (*rest.Response, error) {
-	from := mail.NewEmail("admin", "admin@unindra.com")
+	from := mail.NewEmail("admin", "admin@tokosimple.com")
 	to := mail.NewEmail(name, email)
 	subjectMail := subject
 	template := ParseHtml(fileName, map[string]string{

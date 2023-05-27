@@ -1,17 +1,27 @@
 package main
 
 import (
+	"log"
+
 	helmet "github.com/danielkov/gin-helmet"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 
 	config "github.com/donaderoyan/simple-go-api/configs"
+	route "github.com/donaderoyan/simple-go-api/routes"
 	util "github.com/donaderoyan/simple-go-api/utils"
 )
 
 func main() {
-
+	/**
+	@description Setup Server
+	*/
+	router := SetupRouter()
+	/**
+	@description Run Server
+	*/
+	log.Fatal(router.Run(":" + util.GodotEnv("GO_PORT")))
 }
 
 func SetupRouter() *gin.Engine {
@@ -36,7 +46,7 @@ func SetupRouter() *gin.Engine {
 	router.Use(gzip.Gzip(gzip.BestCompression))
 
 	route.InitAuthRoutes(db, router)
-	route.InitStudentRoutes(db, router)
+	// route.InitProduct(db, router)
 
 	return router
 }

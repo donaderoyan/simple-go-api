@@ -164,7 +164,7 @@ func (c *Cart) UpdateItemQty(db *gorm.DB, itemID string, qty int) (*CartItem, er
 		return nil, err
 	}
 
-	basePrice, _ := product.Price.float64()
+	basePrice, _ := product.Price.Float64()
 	taxAmount := GetTaxAmount(basePrice)
 	discountAmount := 0.0
 

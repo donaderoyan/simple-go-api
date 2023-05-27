@@ -1,6 +1,8 @@
 package registerAuth
 
-import model "github.com/donaderoyan/simple-go-api/models"
+import (
+	model "github.com/donaderoyan/simple-go-api/models"
+)
 
 type Service interface {
 	RegisterService(input *InputRegister) (*model.User, string)

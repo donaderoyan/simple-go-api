@@ -22,8 +22,9 @@ func (r *repository) RegisterRepository(input *model.User) (*model.User, string)
 	db := r.db.Model(&user)
 	errorCode := make(chan string, 1)
 
-	err := db.Debug().Model(&user).Where("email = ?", input.Email).First(&user).Error
-	if err != nil {
+	// err := db.Debug().Model(&user).Where("email = ?", input.Email).First(&user).Error
+	checkUserAccount := db.Debug().Select("*").Where("email = ?", input.Email).Find(&user)
+	if checkUserAccount.RowsAffected > 0 {
 		errorCode <- "REGISTER_CONFLICT_409"
 		return &user, <-errorCode
 	}
