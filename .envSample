@@ -1,0 +1,20 @@
+#########################
+# APP DEVELOPMENT ENV
+#########################
+GO_PORT=4000
+GO_ENV=test
+#########################
+# PG DEVELOPMENT ENV
+#########################
+DATABASE_URI_PROD=postgres://donaderoyan:donaderoyan@db:5432/toko_simple
+DATABASE_URI_DEV=postgres://root:secret@db:5432/toko_simple
+#postgres://0.0.0.0:5432/toko_simple?sslmode=disable&user=root&password=secret
+#########################
+# JWT DEVELOPMENT ENV
+########################
+JWT_SECRET=ZG9uYWRlcm95YW4gLSBzaW1wbGUtZ28tYXBp
+
+#########################
+# SG DEVELOPMENT ENV
+########################
+SG_API_KEY=Qm9rb2Jva29iby0gS29ibyBLYW5hZXJ1IGF0IHlvdXIgc2VydmljZSEgTGV0IG1lIGJlIHlvdXIgc3VuIHRvIHNoaW5lIHlvdXIgZGF5LCBlaGV+4piU
