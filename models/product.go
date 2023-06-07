@@ -9,7 +9,7 @@ import (
 
 type Product struct {
 	ID               string `gorm:"primaryKey;not null;unique"`
-	ParentID         string `gorm:"index;not null"`
+	ParentID         string `gorm:"index"`
 	User             User
 	UserID           string `gorm:"index;not null"`
 	ProductImages    []ProductImage
