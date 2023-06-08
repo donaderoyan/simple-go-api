@@ -10,7 +10,6 @@ func RegisterModels() []Model {
 		{Model: Address{}},
 		{Model: Product{}},
 		{Model: ProductImage{}},
-		{Model: Section{}},
 		{Model: Category{}},
 		{Model: Order{}},
 		{Model: OrderItem{}},

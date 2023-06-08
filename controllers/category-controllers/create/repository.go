@@ -22,7 +22,11 @@ func (r *repository) CreateCategoryRepository(input *model.Category) (*model.Cat
 	db := r.db.Model(&category)
 	errorCode := make(chan string, 1)
 
-	addNewCategory := db.Debug().Create(input)
+	category.Name = input.Name
+	category.Slug = input.Slug
+	category.ParentID = input.ParentID
+
+	addNewCategory := db.Debug().Create(&category)
 	db.Commit()
 
 	if addNewCategory.Error != nil {

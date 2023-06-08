@@ -22,8 +22,7 @@ func (s *service) CreateCategoryService(input *InputCreateCategory) (*model.Cate
 		Name: input.Name,
 		Slug: input.Slug,
 
-		ParentID:  input.ParentID,
-		SectionID: input.SectionID,
+		ParentID: input.ParentID,
 	}
 
 	resultCreateCategory, errCreateCategory := s.repository.CreateCategoryRepository(&category)

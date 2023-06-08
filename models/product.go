@@ -3,6 +3,7 @@ package model
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
 )
@@ -26,6 +27,17 @@ type Product struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	DeletedAt        gorm.DeletedAt
+}
+
+func (entity *Product) BeforeCreate(db *gorm.DB) error {
+	entity.ID = uuid.New().String()
+	entity.CreatedAt = time.Now().Local()
+	return nil
+}
+
+func (entity *Product) BeforeUpdate(db *gorm.DB) error {
+	entity.UpdatedAt = time.Now().Local()
+	return nil
 }
 
 func (p *Product) GetProducts(db *gorm.DB, perPage int, page int) (*[]Product, int64, error) {

@@ -38,6 +38,7 @@ func (h *handler) LoginHandler(ctx *gin.Context) {
 	default:
 		accessTokenData := map[string]interface{}{"id": resultLogin.ID, "email": resultLogin.Email}
 		accessToken, errToken := util.Sign(accessTokenData, "JWT_SECRET", 24*60*1)
+		accessTokenData["accessToken"] = accessToken
 
 		if errToken != nil {
 			defer logrus.Error(errToken.Error())
@@ -45,6 +46,6 @@ func (h *handler) LoginHandler(ctx *gin.Context) {
 			return
 		}
 
-		util.APIResponse(ctx, "Login successfully", http.StatusOK, http.MethodPost, map[string]string{"accessToken": accessToken})
+		util.APIResponse(ctx, "Login successfully", http.StatusOK, http.MethodPost, accessTokenData)
 	}
 }

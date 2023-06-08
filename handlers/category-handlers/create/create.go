@@ -33,9 +33,9 @@ func (h *handler) CreateCategoryHandler(ctx *gin.Context) {
 
 	switch errCreateCategory {
 	case "CREATE_CATEGORY_FAILED_403":
-		util.APIResponse(ctx, "Create category failed", http.StatusForbidden, http.MethodPost, nil)
+		util.APIResponse(ctx, "Create category failed", http.StatusForbidden, http.MethodPost, input)
 		return
 	default:
-		util.APIResponse(ctx, "Create category success", http.StatusCreated, http.MethodPost, nil)
+		util.APIResponse(ctx, "Create category success", http.StatusCreated, http.MethodPost, input)
 	}
 }
