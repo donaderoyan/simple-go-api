@@ -11,13 +11,13 @@ import (
 type User struct {
 	ID            string `gorm:"primaryKey;not null"`
 	Addresses     []Address
-	FirstName     string `gorm:"type:varchar(255);not null"`
-	LastName      string `gorm:"type:varchar(255);not null"`
-	Email         string `gorm:"type:varchar(255);unique;not null"`
-	Password      string `gorm:"type:varchar(255);not null"`
-	RememberToken string `gorm:"type:varchar(255);not null"`
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
+	FirstName     string    `gorm:"type:varchar(255);not null"`
+	LastName      string    `gorm:"type:varchar(255);not null"`
+	Email         string    `gorm:"type:varchar(255);unique;not null"`
+	Password      string    `gorm:"type:varchar(255);not null" json:"-"`
+	RememberToken string    `gorm:"type:varchar(255);not null" json:"-"`
+	CreatedAt     time.Time `json:"-"`
+	UpdatedAt     time.Time `json:"-"`
 }
 
 func (entity *User) BeforeCreate(db *gorm.DB) error {

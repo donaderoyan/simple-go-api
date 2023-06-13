@@ -15,8 +15,6 @@ type Category struct {
 	Slug      string `gorm:"type:varchar(255);not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-
-	Products []Product `gorm:"many2many:product_categories;"`
 }
 
 func (entity *Category) BeforeCreate(db *gorm.DB) error {

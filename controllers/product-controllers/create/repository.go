@@ -3,6 +3,7 @@ package createProduct
 import (
 	model "github.com/donaderoyan/simple-go-api/models"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type Repository interface {
@@ -19,6 +20,7 @@ func NewRepositoryCreate(db *gorm.DB) *repository {
 
 func (r *repository) CreateProductRepository(input *model.Product) (*model.Product, string) {
 	var product model.Product
+	product = *input
 	db := r.db.Model(&product)
 	errorCode := make(chan string, 1)
 
@@ -29,13 +31,22 @@ func (r *repository) CreateProductRepository(input *model.Product) (*model.Produ
 		return &product, <-errorCode
 	}
 
-	addNewProduct := db.Debug().Create(input)
+	addNewProduct := db.Debug().Omit(clause.Associations).Create(&product)
 	db.Commit()
 
 	if addNewProduct.Error != nil {
 		errorCode <- "CREATE_PRODUCT_FAILED_403"
 		return input, <-errorCode
 	} else {
+
+		var ProductCategories model.ProductCategories
+		for _, cat := range product.Categories {
+			ProductCategories.CategoryID = cat.ID
+			ProductCategories.ProductID = product.ID
+
+			r.db.Model(&ProductCategories).Create(&ProductCategories)
+		}
+
 		errorCode <- "nil"
 	}
 

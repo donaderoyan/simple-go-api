@@ -9,12 +9,11 @@ import (
 )
 
 type Product struct {
-	ID               string `gorm:"primaryKey;not null;unique"`
-	ParentID         string `gorm:"index"`
-	User             User
-	UserID           string `gorm:"index;not null"`
-	ProductImages    []ProductImage
-	Categories       []Category      `gorm:"many2many:product_categories;"`
+	ID       string `gorm:"primaryKey;not null;unique"`
+	ParentID string `gorm:"index"`
+	User     User
+	UserID   string `gorm:"index;not null"`
+
 	Sku              string          `gorm:"type:varchar(100);index"`
 	Name             string          `gorm:"type:varchar(255);not null"`
 	Slug             string          `gorm:"type:varchar(255);not null"`
@@ -27,6 +26,10 @@ type Product struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	DeletedAt        gorm.DeletedAt
+
+	ProductImages []ProductImage
+	Categories    []Category `gorm:"many2many:product_categories;"`
+	CategoryID    []string   `json:"category_id" gorm:"-"`
 }
 
 func (entity *Product) BeforeCreate(db *gorm.DB) error {
