@@ -1,9 +1,12 @@
 package resultsProduct
 
-import model "github.com/donaderoyan/simple-go-api/models"
+import (
+	model "github.com/donaderoyan/simple-go-api/models"
+	util "github.com/donaderoyan/simple-go-api/utils"
+)
 
 type Service interface {
-	ResultsProductService() (*[]model.Product, string)
+	ResultsProductService(util.Paginate) (*[]model.Product, string)
 }
 
 type service struct {
@@ -14,7 +17,7 @@ func NewServiceResults(repository Repository) *service {
 	return &service{repository: repository}
 }
 
-func (s *service) ResultsProductService() (*[]model.Product, string) {
-	resultsProduct, errResultsProduct := s.repository.ResultsProductRepository()
+func (s *service) ResultsProductService(paginate util.Paginate) (*[]model.Product, string) {
+	resultsProduct, errResultsProduct := s.repository.SetScopeResult(paginate).ResultsProductRepository()
 	return resultsProduct, errResultsProduct
 }

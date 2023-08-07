@@ -24,5 +24,5 @@ func InitProductRoutes(db *gorm.DB, route *gin.Engine) {
 
 	groupRoute := route.Group("/api/v1").Use(middleware.Auth())
 	groupRoute.POST("/product", createProductHandler.CreateProductHandler)
-	groupRoute.GET("/product", resultsProductHandler.ResultsProductHandler)
+	groupRoute.GET("/products", resultsProductHandler.ResultsProductHandler)
 }

@@ -2,12 +2,14 @@ package resultsProduct
 
 import (
 	model "github.com/donaderoyan/simple-go-api/models"
+	util "github.com/donaderoyan/simple-go-api/utils"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
 
 type Repository interface {
 	ResultsProductRepository() (*[]model.Product, string)
+	SetScopeResult(paginate util.Paginate) *repository
 }
 
 type repository struct {
@@ -18,12 +20,19 @@ func NewRepositoryResults(db *gorm.DB) *repository {
 	return &repository{db: db}
 }
 
+func (r *repository) SetScopeResult(paginate util.Paginate) *repository {
+	db := r.db
+	var scopePaginate util.Paginate
+	scopePaginate.Limit = paginate.Limit
+	scopePaginate.Page = paginate.Page
+
+	scope := db.Debug().Scopes(scopePaginate.PaginatedResult)
+	return &repository{db: scope}
+}
+
 func (r *repository) ResultsProductRepository() (*[]model.Product, string) {
 
 	var products []model.Product
-
-	// fmt.Println("products SLICE:", &products)
-	// fmt.Println("user >>:", string(u))
 
 	db := r.db.Model(&products)
 	errorCode := make(chan string, 1)

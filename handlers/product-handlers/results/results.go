@@ -17,12 +17,18 @@ func NewHandlerResultsProduct(service resultsProduct.Service) *handler {
 }
 
 func (h *handler) ResultsProductHandler(ctx *gin.Context) {
-	resultsProduct, errResultsProduct := h.service.ResultsProductService()
+
+	var paginate util.Paginate
+	if err := ctx.ShouldBindQuery(&paginate); err != nil {
+		// logrus.Info("GET Query Error", paginate)
+	}
+
+	resultsProduct, errResultsProduct := h.service.ResultsProductService(paginate)
 
 	switch errResultsProduct {
 	case "RESULTS_STUDENT_NOT_FOUND_404":
-		util.APIResponse(ctx, "Products data is not exists", http.StatusConflict, http.MethodPost, nil)
+		util.APIResponse(ctx, "Products data is not exists", http.StatusConflict, http.MethodGet, nil)
 	default:
-		util.APIResponse(ctx, "Results Product data successfully", http.StatusOK, http.MethodPost, resultsProduct)
+		util.APIResponsePagination(ctx, "Results Product data successfully", http.StatusOK, http.MethodGet, resultsProduct, paginate)
 	}
 }
